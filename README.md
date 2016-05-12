@@ -1,5 +1,7 @@
 # jpnewman.elk-packetbeat
 
+[![Build Status](https://travis-ci.org/jpnewman/ansible-role-elk-packetbeat.svg?branch=master)](https://travis-ci.org/jpnewman/ansible-role-elk-packetbeat)
+
 This is a Ansible role to installs [packetbeat](https://www.elastic.co/products/beats/packetbeat)
 
 ## Requirements
