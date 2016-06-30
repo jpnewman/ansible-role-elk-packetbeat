@@ -88,4 +88,4 @@
   shell: curl -XPUT 'http://{{ packetbeat_elasticsearch_host }}/_template/packetbeat' -d@/etc/packetbeat/packetbeat.template.json
 
 - name: Start Packetbeat
-  service: name=packetbeat state=started
+  service: name=packetbeat state=started enabled=yes

@@ -19,7 +19,13 @@ Ansible 2.x
 |```packetbeat_logstash_output```||true|
 |```packetbeat_logstash_host```||'localhost:5044'|
 |```packetbeat_elasticsearch_host```||'localhost:9200'|
+|```packetbeat_protocols_ports```||Array of ```protocol_ports``` objects|
 |```packetbeat_redis_host```||'localhost'|
+|```packetbeat_enable_icmp```||true|
+|```packetbeat_shipper_tags```||[]|
+|```packetbeat_ignore_outgoing```||true|
+|```packetbeat_refresh_topology_freq```||10|
+|```packetbeat_topology_expire```||15|
 |```ssl_cert_local_directory```||files/certs|
 |```ssl_cert_directory```||/etc/pki/tls/certs|
 |```ssl_cert```||logstash-forwarder.crt|
@@ -30,6 +36,33 @@ Ansible 2.x
 |```geoip_database_extracted_filename```||GeoLiteCity.dat|
 |```geoip_database_paths```||```/usr/share/GeoIP/{{ geoip_database_extracted_filename }}```
 |||```/usr/local/var/GeoIP/{{ geoip_database_extracted_filename }}```|
+
+
+#### ```protocol_ports``` Objects
+|Variable|Description|
+|---|---|
+|```protocol```|Name of protocol|
+|```ports```|Array of port numbers|
+
+The default ```protocol_ports``` objects settings are: -
+
+~~~
+packetbeat_protocols_ports:
+  - protocol: dns
+    ports: [53]
+  - protocol: http
+    ports: [80, 8080, 8000, 5000, 8002]
+  - protocol: memcache
+    ports: [11211]
+  - protocol: mysql
+    ports: [3306]
+  - protocol: redis
+    ports: [6379]
+  - protocol: pgsql
+    ports: [5432]
+  - protocol: thrift
+    ports: [9090]
+~~~
 
 ## Dependencies
 

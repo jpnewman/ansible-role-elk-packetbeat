@@ -3,39 +3,39 @@ interfaces:
 
 protocols:
   icmp:
-    enabled: true
+    enabled: {{ packetbeat_enable_icmp | lower }}
 
-  dns:
-    ports: [53]
+{% if packetbeat_protocols_ports | length > 0 -%}
+{% for packetbeat_protocol_ports in packetbeat_protocols_ports %}
+  {{ packetbeat_protocol_ports.protocol }}:
+    ports: [{{ packetbeat_protocol_ports.ports | join(', ') }}]
 
-  http:
-    ports: [80, 8080, 8000, 5000, 8002]
-
-  memcache:
-    ports: [11211]
-
-  mysql:
-    ports: [3306]
-
-  redis:
-    ports: [6379]
-
-  pgsql:
-    ports: [5432]
-
-  thrift:
-    ports: [9090]
+{% endfor -%}
+{% endif -%}
 
 output:
-
   logstash:
-    enabled: {{ packetbeat_logstash_output }}
+    enabled: {{ packetbeat_logstash_output | lower }}
     hosts: ["{{ packetbeat_logstash_host }}"]
     index: packetbeat
     tls:
       certificate_authorities: {{ certificate_authorities }}
 
 shipper:
+  {% if packetbeat_shipper_tags | length > 0 -%}
+  tags: ["{{ packetbeat_shipper_tags | join('\", \"') }}"]
+  {% endif -%}
+  ignore_outgoing: {{ packetbeat_ignore_outgoing | lower }}
+  refresh_topology_freq: {{ packetbeat_refresh_topology_freq }}
+  topology_expire: {{ packetbeat_topology_expire }}
+
+  {% if geoip_database_paths | length > 0 -%}
+  geoip:
+    paths:
+      {% for path in geoip_database_paths -%}
+      - "{{ path }}"
+      {% endfor -%}
+  {% endif%}
 
 logging:
   level: warning
@@ -48,17 +48,3 @@ logging:
     name: packetbeat.log
     rotateeverybytes: 10485760 # 10MB
     keepfiles: 7
-
-shipper:
-  tags: ["service-X", "web-tier"]
-  ignore_outgoing: true
-  refresh_topology_freq: 10
-  topology_expire: 15
-
-  {% if geoip_database_paths | length > 0 -%}
-  geoip:
-    paths:
-      {% for path in geoip_database_paths -%}
-      - "{{ path }}"
-      {% endfor -%}
-  {% endif -%}

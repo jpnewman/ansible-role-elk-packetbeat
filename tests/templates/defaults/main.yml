@@ -27,7 +27,9 @@ packetbeat_protocols_ports:
   - protocol: thrift
     ports: [9090]
 
-packetbeat_shipper_tags: []
+packetbeat_shipper_tags:
+  - "service-X"
+  - "web-tier"
 
 packetbeat_ignore_outgoing: true
 packetbeat_refresh_topology_freq: 10
