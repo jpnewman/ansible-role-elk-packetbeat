@@ -25,12 +25,14 @@
 - name: Download GeoIP database
   get_url: url={{ geoip_database_url_path}}/{{ geoip_database_url_filename }} dest=/tmp
   register: get_geoip_database
+  changed_when: False
 
 - name: Get gzip version
   shell: dpkg -s gzip | grep Version | awk '{print $2}' | sed -e 's/-.*$//g'
   register: gzip_version
   always_run: True
   ignore_errors: True
+  changed_when: False
 
 - debug: msg="gzip version {{ gzip_version.stdout }}"
 
@@ -66,6 +68,7 @@
   register: installed_version
   always_run: True
   ignore_errors: True
+  changed_when: False
 
 - name: Download Packetbeat agent
   get_url:
@@ -75,7 +78,7 @@
 
 - name: Install Packetbeat agent
   apt: deb=/tmp/packetbeat_{{ packetbeat_version }}_{{ packetbeat_platform }}.deb
-  when: installed_version.stdout != '{{ packetbeat_version_check }}'
+  when: installed_version.stdout != '{{ packetbeat_version_check }}' and not ansible_check_mode
 
 - name: Create directory for Packetbeat Configures
   file: path=/var/log/packetbeat state=directory
