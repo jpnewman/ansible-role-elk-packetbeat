@@ -1,6 +1,6 @@
 ---
-packetbeat_version: 1.2.1
-packetbeat_version_check: 1.2.1
+packetbeat_version: 1.2.3
+packetbeat_version_check: 1.2.3
 packetbeat_platform: amd64
 
 packetbeat_logstash_output: true

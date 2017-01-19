@@ -13,11 +13,13 @@ Ansible 2.x
 
 |Variable|Description|Default|
 |---|---|---|
-|```packetbeat_version```||1.2.1|
-|```packetbeat_version_check```||1.2.1|
+|```packetbeat_version```||1.2.3|
+|```packetbeat_version_check```||1.2.3|
 |```packetbeat_platform```||amd64|
 |```packetbeat_logstash_output```||true|
 |```packetbeat_logstash_host```||'localhost:5044'|
+|```packetbeat_logstash_proxy```|||
+|```packetbeat_logstash_proxy_use_local_resolver```|||
 |```packetbeat_elasticsearch_host```||'localhost:9200'|
 |```packetbeat_protocols_ports```||Array of ```protocol_ports``` objects|
 |```packetbeat_redis_host```||'localhost'|

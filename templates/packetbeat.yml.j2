@@ -17,6 +17,12 @@ output:
   logstash:
     enabled: {{ packetbeat_logstash_output | lower }}
     hosts: ["{{ packetbeat_logstash_host }}"]
+    {% if packetbeat_logstash_proxy is defined -%}
+    proxy_url: {{ packetbeat_logstash_proxy }}
+    {% endif -%}
+    {% if packetbeat_logstash_proxy_use_local_resolver is defined -%}
+    proxy_use_local_resolver: {{ packetbeat_logstash_proxy_use_local_resolver | lower }}
+    {% endif -%}
     index: packetbeat
     tls:
       certificate_authorities: {{ certificate_authorities }}

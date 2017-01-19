@@ -30,6 +30,8 @@ output:
   logstash:
     enabled: true
     hosts: ["localhost:5044"]
+    proxy_url: socks5://localhost:8232
+    proxy_use_local_resolver: true
     index: packetbeat
     tls:
       certificate_authorities: ["/etc/pki/tls/certs/logstash-forwarder.crt"]
@@ -44,7 +46,7 @@ shipper:
     paths:
       - "/usr/share/GeoIP/GeoLiteCity.dat"
       - "/usr/local/var/GeoIP/GeoLiteCity.dat"
-      
+
 logging:
   level: warning
 

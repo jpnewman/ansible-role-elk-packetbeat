@@ -30,7 +30,7 @@
 - name: Get gzip version
   shell: dpkg -s gzip | grep Version | awk '{print $2}' | sed -e 's/-.*$//g'
   register: gzip_version
-  always_run: True
+  check_mode: no
   ignore_errors: True
   changed_when: False
 
@@ -52,11 +52,11 @@
 
 - name: Create GeoIP directories
   file: path={{ item | dirname }} state=directory
-  with_items: geoip_database_paths
+  with_items: "{{ geoip_database_paths }}"
 
 - name: Coping GeoIP databases
   command: cp /tmp/{{ geoip_database_extracted_filename }} {{ item }}
-  with_items: geoip_database_paths
+  with_items: "{{ geoip_database_paths }}"
   when: get_geoip_database | changed
 
 # Config
@@ -66,7 +66,7 @@
 - name: Check if Packetbeat is already at the right version
   shell: dpkg -s packetbeat | grep Version | awk '{print $2}'
   register: installed_version
-  always_run: True
+  check_mode: no
   ignore_errors: True
   changed_when: False
 
@@ -89,6 +89,12 @@
 
 - name: Index Packetbeat Elasticsearch
   shell: curl -XPUT 'http://{{ packetbeat_elasticsearch_host }}/_template/packetbeat' -d@/etc/packetbeat/packetbeat.template.json
+  when: packetbeat_logstash_proxy is not defined
 
-- name: Start Packetbeat
+# - name: Index Packetbeat Elasticsearch
+#   shell: curl --proxy '{{ packetbeat_logstash_proxy }}' -XPUT 'http://{{ packetbeat_elasticsearch_host }}/_template/packetbeat' -d@/etc/packetbeat/packetbeat.template.json
+#   when: packetbeat_logstash_proxy is defined
+
+- name: Starting Packetbeat
   service: name=packetbeat state=started enabled=yes
+  ignore_errors: "{{ ansible_check_mode }}"
