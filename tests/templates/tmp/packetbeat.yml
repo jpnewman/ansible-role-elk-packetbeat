@@ -44,8 +44,8 @@ shipper:
 
   geoip:
     paths:
-      - "/usr/share/GeoIP/GeoLiteCity.dat"
-      - "/usr/local/var/GeoIP/GeoLiteCity.dat"
+      - "/usr/share/GeoIP/GeoLite2-City.mmdb"
+      - "/usr/local/var/GeoIP/GeoLite2-City.mmdb"
 
 logging:
   level: warning

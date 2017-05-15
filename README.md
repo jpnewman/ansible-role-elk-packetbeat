@@ -13,9 +13,11 @@ Ansible 2.x
 
 |Variable|Description|Default|
 |---|---|---|
-|```packetbeat_version```||1.2.3|
-|```packetbeat_version_check```||1.2.3|
+|```packetbeat_version```||5.3.0|
+|```packetbeat_version_check```||5.3.0|
 |```packetbeat_platform```||amd64|
+|```packetbeat_apt_package_name```||```"packetbeat-{{ packetbeat_version }}-{{ packetbeat_platform }}.deb"```|
+|```packetbeat_apt_repository```||```"https://artifacts.elastic.co/downloads/beats/packetbeat/{{ packetbeat_apt_package_name }}"```|
 |```packetbeat_logstash_output```||true|
 |```packetbeat_logstash_host```||'localhost:5044'|
 |```packetbeat_logstash_proxy```|||
@@ -33,12 +35,11 @@ Ansible 2.x
 |```ssl_cert```||logstash-forwarder.crt|
 |```certificate_authorities```||'["/etc/pki/tls/certs/logstash-forwarder.crt"]'|
 |```apt_cache_valid_time```||600|
-|```geoip_database_url_path```||http://geolite.maxmind.com/download/geoip/database|
-|```geoip_database_url_filename```||GeoLiteCity.dat.gz|
-|```geoip_database_extracted_filename```||GeoLiteCity.dat|
-|```geoip_database_paths```||```/usr/share/GeoIP/{{ geoip_database_extracted_filename }}```
-|||```/usr/local/var/GeoIP/{{ geoip_database_extracted_filename }}```|
-
+|```geoip_database_extracted_filename```||GeoLite2-City.mmdb|
+|```geoip_database_url_filename```||```"{{ geoip_database_extracted_filename }}.gz"```|
+|```geoip_database_url```||```"http://geolite.maxmind.com/download/geoip/database/{{ geoip_database_url_filename }}"```|
+|```geoip_database```||```/etc/logstash/geoip/{{ geoip_database_extracted_filename }}```|
+|```geoip_database_paths```||```/usr/share/GeoIP/{{ geoip_database_extracted_filename }}```<br>```/usr/local/var/GeoIP/{{ geoip_database_extracted_filename }}```|
 
 #### ```protocol_ports``` Objects
 |Variable|Description|

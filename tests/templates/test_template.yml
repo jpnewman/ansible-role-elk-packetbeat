@@ -8,4 +8,6 @@
 
   tasks:
     - name: Configure Filebeat
-      template: src=../../templates/packetbeat.yml.j2 dest=./tmp/packetbeat.yml
+      template:
+        src: ../../templates/packetbeat.yml.j2
+        dest: ./tmp/packetbeat.yml
