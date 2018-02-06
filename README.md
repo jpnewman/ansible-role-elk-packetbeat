@@ -15,6 +15,7 @@ Ansible 2.x
 |---|---|---|
 |```packetbeat_version```||1.2.3|
 |```packetbeat_version_check```||1.2.3|
+|```filebeat_name```|Overrides ```beat.name```||
 |```packetbeat_platform```||amd64|
 |```packetbeat_logstash_output```||true|
 |```packetbeat_logstash_host```||'localhost:5044'|

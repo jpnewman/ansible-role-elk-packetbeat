@@ -28,6 +28,9 @@ output:
       certificate_authorities: {{ certificate_authorities }}
 
 shipper:
+  {% if packetbeat_name is defined -%}
+  name: {{ packetbeat_name | lower }}
+  {% endif -%}
   {% if packetbeat_shipper_tags | length > 0 -%}
   tags: ["{{ packetbeat_shipper_tags | join('\", \"') }}"]
   {% endif -%}

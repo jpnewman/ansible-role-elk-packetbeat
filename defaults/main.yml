@@ -26,6 +26,8 @@ packetbeat_protocols_ports:
     ports: [5432]
   - protocol: thrift
     ports: [9090]
+  - protocol: tls
+    ports: [443]
 
 packetbeat_shipper_tags: []
 
